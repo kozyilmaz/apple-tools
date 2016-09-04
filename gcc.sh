@@ -132,9 +132,9 @@ cd $path_to_build/gcc-$GCC_VERSION
 mkdir build && cd build
 ../configure --prefix=$GCC_INSTALL_DIRECTORY/gcc-$GCC_VERSION --enable-checking=release --with-gmp=$path_to_install --with-mpfr=$path_to_install --with-mpc=$path_to_install --enable-languages=c,c++ --with-isl=$path_to_install --program-suffix=-$GCC_VERSION
 make -j $PARALLEL_JOBS
-echo "Enter password to complete installation to $GCC_INSTALL_DIRECTORY"
-make install
-echo "gcc installed to $GCC_INSTALL_DIRECTORY"
+echo "Enter password to complete installation to $GCC_INSTALL_DIRECTORY/gcc-$GCC_VERSION"
+sudo make install
+echo "gcc installed to $GCC_INSTALL_DIRECTORY/gcc-$GCC_VERSION"
 fi
 
 
