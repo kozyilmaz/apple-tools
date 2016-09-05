@@ -179,10 +179,10 @@ if [ $MC_SELECT = y ]; then
 rm -rf $path_to_build/mc-$MC_VERSION
 tar xjf $path_to_source/mc-$MC_VERSION.tar.bz2 -C $path_to_build
 cd $path_to_build/mc-$MC_VERSION
-./configure --prefix=$MC_INSTALL_DIRECTORY --disable-nls --with-screen=ncurses --with-glib-static=yes GLIB_LIBDIR="$path_to_install/lib" LIBS="$path_to_install/lib/libgmodule-2.0.a $path_to_install/lib/libglib-2.0.a -Wl,-framework -Wl,CoreFoundation -Wl,-framework -Wl,Cocoa"
+./configure --prefix=$MC_INSTALL_DIRECTORY --disable-nls --enable-static --with-screen=ncurses --with-glib-static=yes GLIB_LIBDIR="$path_to_install/lib" GMODULE_LIBS="$path_to_install/lib/libgmodule-2.0.a" LIBS="$path_to_install/lib/libgmodule-2.0.a $path_to_install/lib/libglib-2.0.a -Wl,-framework -Wl,CoreFoundation -Wl,-framework -Wl,Cocoa"
 make -j $PARALLEL_JOBS
 echo "Enter password to complete installation to $MC_INSTALL_DIRECTORY"
-#sudo make install
+sudo make install
 fi
 
 echo "Midnight Commander installed to $MC_INSTALL_DIRECTORY with minimum dependencies"
