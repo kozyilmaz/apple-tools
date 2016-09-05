@@ -33,40 +33,52 @@ GLIB_MINOR_VERSION="2"
 MC_VERSION="4.8.15"
 
 PARALLEL_JOBS=4
-PACKAGE_DOWNLOAD=y
 
-M4_BUILD=y
-AUTOCONF_BUILD=y
-AUTOMAKE_BUILD=y
-LIBTOOL_BUILD=y
-PKGCONFIG_BUILD=y
-LIBFFI_BUILD=y
-GLIB_BUILD=y
-MC_BUILD=y
+M4_SELECT=n
+AUTOCONF_SELECT=n
+AUTOMAKE_SELECT=n
+LIBTOOL_SELECT=n
+PKGCONFIG_SELECT=n
+LIBFFI_SELECT=n
+GLIB_SELECT=n
+MC_SELECT=y
 
 
 #
 # Download packages
 #
-if [ $PACKAGE_DOWNLOAD = y ]; then
-echo "Download m4-$M4_VERSION"
-cd $path_to_source; curl -OL http://ftp.gnu.org/gnu/m4/m4-$M4_VERSION.tar.gz;
-echo "Download autoconf-$AUTOCONF_VERSION"
-cd $path_to_source; curl -OL http://ftp.gnu.org/gnu/autoconf/autoconf-$AUTOCONF_VERSION.tar.gz;
-echo "Download automake-$AUTOMAKE_VERSION"
-cd $path_to_source; curl -OL http://ftp.gnu.org/gnu/automake/automake-$AUTOMAKE_VERSION.tar.gz;
-echo "Download libtool-$LIBTOOL_VERSION"
-cd $path_to_source; curl -OL http://ftp.gnu.org/gnu/libtool/libtool-$LIBTOOL_VERSION.tar.gz;
-echo "Download pkg-config-$PKGCONFIG_VERSION"
-cd $path_to_source; curl -OL http://pkgconfig.freedesktop.org/releases/pkg-config-$PKGCONFIG_VERSION.tar.gz
-echo "Download libffi-$LIBFFI_VERSION"
-cd $path_to_source; curl -OL ftp://sourceware.org/pub/libffi/libffi-$LIBFFI_VERSION.tar.gz
-echo "Download glib-$GLIB_MAJOR_VERSION.$GLIB_MINOR_VERSION"
-cd $path_to_source; curl -OL http://ftp.gnome.org/pub/gnome/sources/glib/$GLIB_MAJOR_VERSION/glib-$GLIB_MAJOR_VERSION.$GLIB_MINOR_VERSION.tar.xz
-echo "Download mc-$MC_VERSION"
-cd $path_to_source; curl -OL http://ftp.midnight-commander.org/mc-$MC_VERSION.tar.bz2
+if [ $M4_SELECT = y ] && [ ! -f $path_to_source/m4-$M4_VERSION.tar.gz ]; then
+  echo "Download m4-$M4_VERSION"
+  cd $path_to_source; curl -OL http://ftp.gnu.org/gnu/m4/m4-$M4_VERSION.tar.gz
 fi
-
+if [ $AUTOCONF_SELECT = y ] && [ ! -f $path_to_source/autoconf-$AUTOCONF_VERSION.tar.gz ]; then
+  echo "Download autoconf-$AUTOCONF_VERSION"
+  cd $path_to_source; curl -OL http://ftp.gnu.org/gnu/autoconf/autoconf-$AUTOCONF_VERSION.tar.gz
+fi
+if [ $AUTOMAKE_SELECT = y ] && [ ! -f $path_to_source/automake-$AUTOMAKE_VERSION.tar.gz ]; then
+  echo "Download automake-$AUTOMAKE_VERSION"
+  cd $path_to_source; curl -OL http://ftp.gnu.org/gnu/automake/automake-$AUTOMAKE_VERSION.tar.gz
+fi
+if [ $LIBTOOL_SELECT = y ] && [ ! -f $path_to_source/libtool-$LIBTOOL_VERSION.tar.gz ]; then
+  echo "Download libtool-$LIBTOOL_VERSION"
+  cd $path_to_source; curl -OL http://ftp.gnu.org/gnu/libtool/libtool-$LIBTOOL_VERSION.tar.gz
+fi
+if [ $PKGCONFIG_SELECT = y ] && [ ! -f $path_to_source/pkg-config-$PKGCONFIG_VERSION.tar.gz ]; then
+  echo "Download pkg-config-$PKGCONFIG_VERSION"
+  cd $path_to_source; curl -OL http://pkgconfig.freedesktop.org/releases/pkg-config-$PKGCONFIG_VERSION.tar.gz
+fi
+if [ $LIBFFI_SELECT = y ] && [ ! -f $path_to_source/libffi-$LIBFFI_VERSION.tar.gz ]; then
+  echo "Download libffi-$LIBFFI_VERSION"
+  cd $path_to_source; curl -OL ftp://sourceware.org/pub/libffi/libffi-$LIBFFI_VERSION.tar.gz
+fi
+if [ $GLIB_SELECT = y ] && [ ! -f $path_to_source/glib-$GLIB_MAJOR_VERSION.$GLIB_MINOR_VERSION.tar.xz ]; then
+  echo "Download glib-$GLIB_MAJOR_VERSION.$GLIB_MINOR_VERSION"
+  cd $path_to_source; curl -OL http://ftp.gnome.org/pub/gnome/sources/glib/$GLIB_MAJOR_VERSION/glib-$GLIB_MAJOR_VERSION.$GLIB_MINOR_VERSION.tar.xz
+fi
+if [ $MC_SELECT = y ] && [ ! -f $path_to_source/mc-$MC_VERSION.tar.bz2 ]; then
+  echo "Download mc-$MC_VERSION"
+  cd $path_to_source; curl -OL http://ftp.midnight-commander.org/mc-$MC_VERSION.tar.bz2
+fi
 echo "Download complete!"
 
 
@@ -77,7 +89,7 @@ echo "Download complete!"
 #
 # M4
 #
-if [ $M4_BUILD = y ]; then
+if [ $M4_SELECT = y ]; then
 rm -rf $path_to_build/m4-$M4_VERSION
 tar xzf $path_to_source/m4-$M4_VERSION.tar.gz -C $path_to_build
 cd $path_to_build/m4-$M4_VERSION
@@ -89,7 +101,7 @@ fi
 #
 # Autoconf
 #
-if [ $AUTOCONF_BUILD = y ]; then
+if [ $AUTOCONF_SELECT = y ]; then
 rm -rf $path_to_build/autoconf-$AUTOCONF_VERSION
 tar xzf $path_to_source/autoconf-$AUTOCONF_VERSION.tar.gz -C $path_to_build
 cd $path_to_build/autoconf-$AUTOCONF_VERSION
@@ -101,7 +113,7 @@ fi
 #
 # Automake
 #
-if [ $AUTOMAKE_BUILD = y ]; then
+if [ $AUTOMAKE_SELECT = y ]; then
 rm -rf $path_to_build/automake-$AUTOMAKE_VERSION
 tar xzf $path_to_source/automake-$AUTOMAKE_VERSION.tar.gz -C $path_to_build
 cd $path_to_build/automake-$AUTOMAKE_VERSION
@@ -113,7 +125,7 @@ fi
 #
 # Libtool
 #
-if [ $LIBTOOL_BUILD = y ]; then
+if [ $LIBTOOL_SELECT = y ]; then
 rm -rf $path_to_build/libtool-$LIBTOOL_VERSION
 tar xzf $path_to_source/libtool-$LIBTOOL_VERSION.tar.gz -C $path_to_build
 cd $path_to_build/libtool-$LIBTOOL_VERSION
@@ -125,7 +137,7 @@ fi
 #
 # Pkg-config
 #
-if [ $PKGCONFIG_BUILD = y ]; then
+if [ $PKGCONFIG_SELECT = y ]; then
 rm -rf $path_to_build/pkg-config-$PKGCONFIG_VERSION
 tar xzf $path_to_source/pkg-config-$PKGCONFIG_VERSION.tar.gz -C $path_to_build
 cd $path_to_build/pkg-config-$PKGCONFIG_VERSION
@@ -137,7 +149,7 @@ fi
 #
 # LibFFI
 #
-if [ $LIBFFI_BUILD = y ]; then
+if [ $LIBFFI_SELECT = y ]; then
 rm -rf $path_to_build/libffi-$LIBFFI_VERSION
 tar xzf $path_to_source/libffi-$LIBFFI_VERSION.tar.gz -C $path_to_build
 cd $path_to_build/libffi-$LIBFFI_VERSION
@@ -149,7 +161,7 @@ fi
 #
 # Glib
 #
-if [ $GLIB_BUILD = y ]; then
+if [ $GLIB_SELECT = y ]; then
 rm -rf $path_to_build/glib-$GLIB_MAJOR_VERSION.$GLIB_MINOR_VERSION
 tar xvfJ $path_to_source/glib-$GLIB_MAJOR_VERSION.$GLIB_MINOR_VERSION.tar.xz -C $path_to_build
 cd $path_to_build/glib-$GLIB_MAJOR_VERSION.$GLIB_MINOR_VERSION
@@ -163,14 +175,14 @@ fi
 #
 # Midnight Commander
 #
-if [ $MC_BUILD = y ]; then
+if [ $MC_SELECT = y ]; then
 rm -rf $path_to_build/mc-$MC_VERSION
 tar xjf $path_to_source/mc-$MC_VERSION.tar.bz2 -C $path_to_build
 cd $path_to_build/mc-$MC_VERSION
-./configure --prefix=$MC_INSTALL_DIRECTORY --disable-nls --with-screen=ncurses --with-glib-static=yes GLIB_LIBDIR="$path_to_install/lib" LIBS="$path_to_install/lib/libglib-2.0.a -Wl,-framework -Wl,CoreFoundation -Wl,-framework -Wl,Cocoa"
+./configure --prefix=$MC_INSTALL_DIRECTORY --disable-nls --with-screen=ncurses --with-glib-static=yes GLIB_LIBDIR="$path_to_install/lib" LIBS="$path_to_install/lib/libgmodule-2.0.a $path_to_install/lib/libglib-2.0.a -Wl,-framework -Wl,CoreFoundation -Wl,-framework -Wl,Cocoa"
 make -j $PARALLEL_JOBS
 echo "Enter password to complete installation to $MC_INSTALL_DIRECTORY"
-sudo make install
+#sudo make install
 fi
 
 echo "Midnight Commander installed to $MC_INSTALL_DIRECTORY with minimum dependencies"
