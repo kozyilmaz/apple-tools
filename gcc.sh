@@ -22,13 +22,13 @@ mkdir -p $path_to_install
 #
 # Select packages
 #
-GMP_VERSION="6.1.1"
-MPFR_VERSION="3.1.4"
+GMP_VERSION="6.1.2"
+MPFR_VERSION="3.1.5"
 MPC_VERSION="1.0.3"
-ISL_VERSION="0.16.1"
+ISL_VERSION="0.17.1"
 GCC_VERSION="6.2.0"
 
-PARALLEL_JOBS=4
+PARALLEL_JOBS=8
 
 GMP_SELECT=y
 MPFR_SELECT=y
@@ -54,7 +54,7 @@ if [ $MPC_SELECT = y ] && [ ! -f $path_to_source/mpc-$MPC_VERSION.tar.gz ]; then
 fi
 if [ $ISL_SELECT = y ] && [ ! -f $path_to_source/isl-$ISL_VERSION.tar.bz2 ]; then
   echo "Download isl-$ISL_VERSION"
-  cd $path_to_source; curl -OL ftp://gcc.gnu.org/pub/gcc/infrastructure/isl-$ISL_VERSION.tar.bz2
+  cd $path_to_source; curl -OL http://isl.gforge.inria.fr/isl-$ISL_VERSION.tar.bz2
 fi
 if [ $GCC_SELECT = y ] && [ ! -f $path_to_source/gcc-$GCC_VERSION.tar.bz2 ]; then
   echo "Download gcc-$GCC_VERSION"
