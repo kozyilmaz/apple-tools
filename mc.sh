@@ -26,11 +26,11 @@ M4_VERSION="1.4.17"
 AUTOCONF_VERSION="2.69"
 AUTOMAKE_VERSION="1.15"
 LIBTOOL_VERSION="2.4.6"
-PKGCONFIG_VERSION="0.29"
+PKGCONFIG_VERSION="0.29.1"
 LIBFFI_VERSION="3.2.1"
-GLIB_MAJOR_VERSION="2.46"
+GLIB_MAJOR_VERSION="2.50"
 GLIB_MINOR_VERSION="2"
-MC_VERSION="4.8.15"
+MC_VERSION="4.8.18"
 
 PARALLEL_JOBS=4
 
@@ -167,7 +167,7 @@ tar xvfJ $path_to_source/glib-$GLIB_MAJOR_VERSION.$GLIB_MINOR_VERSION.tar.xz -C 
 cd $path_to_build/glib-$GLIB_MAJOR_VERSION.$GLIB_MINOR_VERSION
 patch -p1 < ../../../patches/glib/glib-0001-optional-gettext.patch
 ./autogen.sh
-./configure --prefix=$path_to_install --disable-shared --enable-static --disable-gtk-doc CFLAGS="-I$path_to_install/include" CXXFLAGS="-I$path_to_install/include" LDFLAGS="-L$path_to_install/lib" LIBS="-Wl,-framework -Wl,CoreFoundation -Wl,-framework -Wl,Cocoa"
+./configure --prefix=$path_to_install --disable-shared --enable-static --with-pcre=internal --disable-gtk-doc CFLAGS="-I$path_to_install/include" CXXFLAGS="-I$path_to_install/include" LDFLAGS="-L$path_to_install/lib" LIBS="-Wl,-framework -Wl,CoreFoundation -Wl,-framework -Wl,Cocoa"
 make -j $PARALLEL_JOBS
 make install
 fi
